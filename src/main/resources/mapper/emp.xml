@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.EmpDao">
+
+    <select id="getUsers" resultType="Emp">
+        select * from emp_user
+        <where>
+            <if test="name !=null">
+                emp_name = #{name}
+            </if>
+            <if test="dept !=null">
+                and dept_name = #{dept}
+            </if>
+            <if test="degree !=null">
+                and emp_degree_name = #{degree}
+            </if>
+        </where>
+        limit #{page},#{limit}
+    </select>
+
+    <select id="getUsersCount" resultType="Integer">
+        select count(id) from emp_user
+        <where>
+            <if test="name !=null">
+                emp_name = #{name}
+            </if>
+            <if test="dept !=null">
+                and dept_name = #{dept}
+            </if>
+            <if test="degree !=null">
+                and emp_degree_name = #{degree}
+            </if>
+        </where>
+    </select>
+
+    <insert id="addUsers" >
+        insert into emp_user values
+        (null,#{name},#{sex},#{age},#{dept},#{degree},#{login_account},"admin")
+    </insert>
+
+    <update id="putUser">
+        update  emp_user set emp_name = #{name},sex = #{sex},age = #{age},dept_name = #{dept},emp_degree_name = #{degree},
+        login_account = #{login_account} where id = #{id}
+    </update>
+
+    <delete id="delUser">
+        DELETE  from emp_user where id = #{id}
+    </delete>
+</mapper>
